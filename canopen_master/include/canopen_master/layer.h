@@ -108,6 +108,7 @@ public:
         }
     }
     void recover(LayerStatus &status) {
+        std::cout << "++!+ layer.h recover(LayerStatus &status)" << std::endl; // FOR TESTING
         if(state == Error){
             if(status.bounded<LayerStatus::Warn>()){
                 state = Recover;

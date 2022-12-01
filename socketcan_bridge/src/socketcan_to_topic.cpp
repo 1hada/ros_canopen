@@ -89,10 +89,11 @@ namespace socketcan_bridge
 
   void SocketCANToTopic::frameCallback(const can::Frame& f)
     {
+      ROS_WARN("++!+ SocketCANToTopic::frameCallback(const can::Frame& f): before frame validity check."); // FOR TESTING
       // ROS_DEBUG("Message came in: %s", can::tostring(f, true).c_str());
       if (!f.isValid())
       {
-        ROS_ERROR("Invalid frame from SocketCAN: id: %#04x, length: %d, is_extended: %d, is_error: %d, is_rtr: %d",
+        ROS_ERROR("++!+ Invalid frame from SocketCAN: id: %#04x, length: %d, is_extended: %d, is_error: %d, is_rtr: %d",
                   f.id, f.dlc, f.is_extended, f.is_error, f.is_rtr);
         return;
       }
@@ -102,7 +103,7 @@ namespace socketcan_bridge
         {
           // can::tostring cannot be used for dlc > 8 frames. It causes an crash
           // due to usage of boost::array for the data array. The should always work.
-          ROS_WARN("Received frame is error: %s", can::tostring(f, true).c_str());
+          ROS_WARN("++!+ Received frame is error: %s", can::tostring(f, true).c_str()); // FOR TESTING , look for in log, these are seen
         }
       }
 
@@ -123,11 +124,11 @@ namespace socketcan_bridge
       driver_->translateError(s.internal_error, err);
       if (!s.internal_error)
       {
-        ROS_INFO("State: %s, asio: %s", err.c_str(), s.error_code.message().c_str());
+        ROS_INFO("++!+ State: %s, asio: %s", err.c_str(), s.error_code.message().c_str()); // FOR TESTING , look for in log 
       }
       else
       {
-        ROS_ERROR("Error: %s, asio: %s", err.c_str(), s.error_code.message().c_str());
+        ROS_ERROR("++!+ Error: %s, asio: %s", err.c_str(), s.error_code.message().c_str()); // FOR TESTING , look for in log 
       }
     };
 };  // namespace socketcan_bridge

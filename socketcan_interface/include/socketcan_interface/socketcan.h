@@ -83,6 +83,7 @@ public:
     }
 
     bool recover() override{
+        std::cout << "++!+ socketcan.h recover() override" << std::endl; // FOR TESTING
         if(!getState().isReady()){
             shutdown();
             return init(device_, loopback_, error_mask_, fatal_error_mask_);
